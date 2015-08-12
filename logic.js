@@ -1,8 +1,19 @@
 var faces = ["ace","king","queen","jack"];
 var suits = ["hearts","diamonds","clubs","spades"];
+var straights = ["ace","king","queen","jack","10","9","8","7","6","5","4","3","2"];
 var deck = [];
+
 var player_hand = [];
+var player_hand_suits = [];
+var player_hand_numbers = [];
+var player_hand_sets = [];
+var player_hand_sets_evaluation = {};
+
 var dealer_hand = [];
+var dealer_hand_suits = [];
+var dealer_hand_numbers = [];
+var dealer_hand_sets = [];
+var dealer_hand_sets_evaluation = {};
 
 function new_deck(){
 	while (deck.length > 0) {
@@ -57,6 +68,33 @@ function show_player_hand() {
 function show_dealer_hand() {
 	document.getElementById('dealer_hand').innerHTML = dealer_hand;
 }
+function evaluate(hand,suits,numbers,set_evaluation,sets) {
+	while (suits.length > 0){
+
+	}
+	while (numbers.length > 0){
+		
+	}
+	for (var i = 0; i < hand.length; i++) {
+
+		var temp = hand[i].split("-");
+		numbers.push(temp[0]);
+		suits.push(temp[1]);
+	};
+	for (var i = 0; i < numbers.length; i++) {
+		if (set_evaluation[numbers[i]] == undefined) {
+			set_evaluation[numbers[i]] = 1;
+		}
+		else {
+			set_evaluation[numbers[i]]++;
+		};
+	};
+	for (number in set_evaluation) {
+		if (eval(number) > 1) {
+			sets.push("You have "+set_evaluation[number]+" "+number+"'s");
+		};
+	}
+}
 
 window.onload = function () {
 	deal();
@@ -73,4 +111,8 @@ window.onload = function () {
 		show_player_hand();
 		show_dealer_hand();
 	};
+	document.getElementById('evaluate').onclick = function () {
+		evaluate(player_hand,player_hand_suits,player_hand_numbers,player_hand_sets_evaluation,player_hand_sets);
+		evaluate(dealer_hand,dealer_hand_suits,dealer_hand_numbers,dealer_hand_sets_evaluation,dealer_hand_sets);
+	};	
 }
